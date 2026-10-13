@@ -44,7 +44,7 @@ module waveset_decoder #(
     localparam Z  = `ACT_F_OFF;    // Force Off (高阻)
     localparam F  = `ACT_F_ON;     // Force On  (开驱动)
 	//
-    localparam L  = `ACT_CMP_L;    // Compare Low R0,R1  [00]
+    localparam L  = `ACT_CMP_L;    // Compare Low R0,R1  
     localparam H  = `ACT_CMP_H;    // Compare High R0,R1 
     localparam V  = `ACT_CMP_V;    // Compare Valid R0,R1  
     localparam M  = `ACT_CMP_M;    // Compare Mid-band R0,R1 
@@ -74,7 +74,7 @@ module waveset_decoder #(
 
         // 格式 2: RZ (回零脉冲)
        // 4'h2: {pat_e0, pat_e1, pat_e2, pat_e3, pat_e4, pat_e5, pat_r0, pat_r1} = {  F, _1, _0, _1, _0,  Z,  H,  L };
-		4'h2: {pat_e0, pat_e1, pat_e2, pat_e3, pat_e4, pat_e5, pat_r0, pat_r1} = {  F, _1, _0, _1, _0,  Z,  H,wH };
+		4'h2: {pat_e0, pat_e1, pat_e2, pat_e3, pat_e4, pat_e5, pat_r0, pat_r1} = {  F, _1, _0, _1, _0,  Z,  wL,C };
 
 
         // 格式 3: RO (回一脉冲)

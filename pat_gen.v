@@ -14,19 +14,20 @@ module pat_gen #(
     // 全局流控与周期接口
     input  wire                         trigger_sync,
     input  wire [PERIOD_WIDTH-1:0]      period_ui_in,
-	input  wire [31*PAT_ACT_GROUNP:0]					pattern_act_cfg,
+	input  wire [32*PAT_ACT_GROUNP-1:0]					pattern_act_cfg,
 	input wire [2:0]             		data_src_sel,        // <--- 外部控制端口
 	input wire [3:0]             		pattern_index,       // WAVESET 行选择
     
     
-    // 边沿时间戳输入 (来自上游 Waveset Decoder)
-    input  wire [EDGE_WIDTH-1:0]                  act_edge_1_ui, act_edge_2_ui, 
-    input  wire [EDGE_WIDTH-1:0]                  act_edge_3_ui, act_edge_4_ui, // 驱动边沿 (Edge 1~4)
-    input  wire [EDGE_WIDTH-1:0]                  act_edge_0_ui, act_edge_5_ui, // 接收使能边沿 (Edge 0, 5)
-    input  wire [EDGE_WIDTH-1:0]                  cmp_edge_r0_ui, cmp_edge_r1_ui, // 比对窗口边沿 (R0, R1)
-    
-    // 期望数据输入
-    input  wire [DATA_WIDTH-1:0]        expect_data_in,
+    // 边沿时间戳输入 (for Waveset Decoder)
+	input  wire [EDGE_WIDTH-1:0]act_edge_0_ui,//接收使能边沿 (Edge 0, 5)
+	input  wire [EDGE_WIDTH-1:0]act_edge_1_ui ,// 驱动边沿 (Edge 1~4)
+	input  wire [EDGE_WIDTH-1:0]act_edge_2_ui ,
+	input  wire [EDGE_WIDTH-1:0]act_edge_3_ui ,
+	input  wire [EDGE_WIDTH-1:0]act_edge_4_ui ,
+	input  wire [EDGE_WIDTH-1:0]act_edge_5_ui ,
+	input  wire [EDGE_WIDTH-1:0]cmp_edge_r0_ui,// 比对窗口边沿 (R0, R1)
+	input  wire [EDGE_WIDTH-1:0]cmp_edge_r1_ui,
     
     // 接口 1：输出给 GT Transceiver (发送与驱动控制)
     output wire                         next_vector_req,
@@ -73,9 +74,9 @@ module pat_gen #(
         .act_e0(act_e0),
         .act_e1(act_e1),
         .act_e2(act_e2),
-        .act_e3(act_e4),
-        .act_e4(act_e5),
-        .act_e5(act_e3),
+        .act_e3(act_e3),
+        .act_e4(act_e4),
+        .act_e5(act_e5),
         .act_r0_en(act_r0_en),
 		.act_r0_mode(act_r0_mode),
 		.act_cmp_win_en(act_cmp_win_en),
@@ -102,8 +103,8 @@ module pat_gen #(
         .act_edge_4_ui(act_edge_4_ui),
 		.act_e1(act_e1), 
 		.act_e2(act_e2),  
-		.act_e3(act_e4),  
-		.act_e4(act_e5), 
+		.act_e3(act_e3),  
+		.act_e4(act_e4), 
         .next_vector_req(next_vector_req),
         .drv_parallel_data(drv_parallel_data)
     );
@@ -123,7 +124,7 @@ module pat_gen #(
         .act_edge_0_ui(act_edge_0_ui),
         .act_edge_5_ui(act_edge_5_ui),
 		.act_e0(act_e0), 
-		.act_e5(act_e3),
+		.act_e5(act_e5),
         .next_vector_req(rcv_req),
         .rcv_parallel_data(rcv_parallel_data)
     );
